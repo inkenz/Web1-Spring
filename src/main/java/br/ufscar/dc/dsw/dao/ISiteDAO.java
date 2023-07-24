@@ -1,0 +1,23 @@
+package br.ufscar.dc.dsw.dao;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+
+import br.ufscar.dc.dsw.domain.Site;
+
+@SuppressWarnings("unchecked")
+public interface ISiteDAO extends CrudRepository<Site, String>{
+	@Query("SELECT s FROM Site s WHERE s.URL = :url")
+	Site findByURL(@Param("url") String url);
+	
+	Site findById(long id);
+	
+	List<Site> findAll();
+	
+	Site save(Site site);
+
+	void deleteByURL(String url);
+}
