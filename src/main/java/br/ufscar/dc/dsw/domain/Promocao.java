@@ -8,6 +8,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="Promocao")
@@ -16,14 +20,29 @@ public class Promocao{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	
+	@Size(min = 3)
+	@NotEmpty
 	@Column(nullable = false, unique = false, length = 70)
 	private String endereco;
+	
+	@Size(min = 18)
+	@NotEmpty
 	@Column(nullable = false, unique = false, length = 14)
 	private String CNPJ;
+	
+	@Min(1)
+	@NotEmpty
 	@Column(nullable = false, unique = false)
 	private float preco;
+	
+	@NotEmpty
+	@FutureOrPresent
 	@Column(nullable = false, unique = false)
 	private Date inicio;
+	
+	@NotEmpty
+	@FutureOrPresent
 	@Column(nullable = false, unique = false)
 	private Date fim;
 	

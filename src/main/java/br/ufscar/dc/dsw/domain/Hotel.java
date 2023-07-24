@@ -4,28 +4,50 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
+import br.ufscar.dc.dsw.validation.UniqueCNPJ;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
+
+@SuppressWarnings("serial")
 @Entity
 @Table(name="Hotel")
 public class Hotel {
 	@Id
-    private String CNPJ;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+    private long id;
 	
+	
+	@UniqueCNPJ (message = "{Unique.editora.CNPJ}")
+	@NotBlank
+	@Size(min = 18, max = 18, message = "{Size.editora.CNPJ}")
+	@Column(nullable = false, unique = true, length = 60)
+	private String CNPJ;
+	
+	@NotEmpty
+	//@Size(max = 60)
 	@Column(nullable = false, unique = true, length = 50)
     private String email;
 	
+	@NotEmpty
 	@Column(nullable = false, unique = false, length = 100)
     private String senha;
 	
+	@NotEmpty
 	@Column(nullable = false, unique = false, length = 50)
     private String nome;
 	
+	@NotEmpty
 	@Column(nullable = false, unique = false, length = 50)
     private String cidade;
     
@@ -35,14 +57,20 @@ public class Hotel {
 	@OneToOne
 	private Usuario usuario;
 	
-    public Hotel(String email, String senha, String CNPJ, String nome, String cidade, Usuario usuario){
+    public Hotel(String email, String senha, String CNPJ, String nome, String cidade){
         this.email = email;
         this.senha = senha;
         this.CNPJ = CNPJ;
         this.nome = nome;
         this.cidade = cidade;
-        this.usuario = usuario;
     }
+    public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
     public String getEmail(){
         return email;
     }

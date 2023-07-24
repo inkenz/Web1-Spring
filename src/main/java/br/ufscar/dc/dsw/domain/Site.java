@@ -6,8 +6,12 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
@@ -17,18 +21,30 @@ import jakarta.persistence.OneToOne;
 @Table(name = "Site")
 public class Site{
 	
+	@Size(min = 3,max = 256)
+	@NotEmpty
 	@Column(nullable = false, unique = true, length = 50)
 	private String email;
-
+	
+	@NotEmpty
 	@Column(nullable = false, unique = false, length = 100)
 	private String senha;
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+    private long id;
+	
+	@NotEmpty
+	@Column(nullable = false, unique = false, length = 100)
 	private String URL;
 	
+	@Size(min = 3)
+	@NotEmpty
 	@Column(nullable = false, unique = false, length = 70)
 	private String nome;
 	
+	@NotEmpty
+	@Size(min = 1,max = 15)
 	@Column(nullable = false, unique = false, length = 15)
 	private String telefone;
 	
@@ -44,6 +60,14 @@ public class Site{
 		this.URL = endereco;
 		this.nome = nome;
 		this.telefone = telefone;
+	}
+	
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 	public String getTelefone() {

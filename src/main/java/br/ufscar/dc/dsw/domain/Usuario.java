@@ -1,81 +1,75 @@
 package br.ufscar.dc.dsw.domain;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
-
-import jakarta.persistence.OneToOne;
-
-
+ 
 @Entity
 @Table(name = "Usuario")
 public class Usuario {
-	@Id
-	private String email;
-	@Column(nullable = false, unique = true, length = 100)
-	private String senha;
-	@Column(nullable = false, unique = true, length = 5)
-	private String papel;
-
-	@OneToOne
-	@NotFound(action=NotFoundAction.IGNORE)
-	private Hotel hotel;
+ 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+ 
+    @Column(nullable = false, length = 45)
+    private String email;
+    
+    @Column(nullable = false, length = 64)
+    private String senha;
+    
+    @Column(nullable = false, length = 45)
+    private String papel;
+    
+    @Column(nullable = false)
+    private boolean enabled;
 	
-	@OneToOne
-	@NotFound(action=NotFoundAction.IGNORE)
-	private Site site;
-	
-	
-	public Usuario(String email, String senha, String papel) {
-		this.email = email;
-		this.senha = senha;
-		this.papel = papel;
+    public Usuario(String email, String senha, String papel) {
+    	this.email=email;
+    	this.senha = senha;
+    	this.papel = papel;
+    }
+    
+    public Long getId() {
+		return id;
 	}
-
-
+	
+    public void setId(Long id) {
+		this.id = id;
+	}
+	
 	public String getEmail() {
-		return this.email;
+		return email;
 	}
-
-	public void setLogin(String email) {
+	
+	public void setEmail(String email) {
 		this.email = email;
 	}
-
+	
 	public String getSenha() {
 		return senha;
 	}
-
-	public void setSenha(String password) {
-		this.senha = password;
+	
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
-
+	
 	public String getPapel() {
 		return papel;
 	}
-
+	
 	public void setPapel(String papel) {
 		this.papel = papel;
 	}
 	
-	public void setHotel(Hotel hotel) {
-		this.hotel = hotel;
+	public boolean isEnabled() {
+		return enabled;
 	}
 	
-	public Hotel getHotel() {
-		return this.hotel;
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
-	
-	public void setSite(Site site) {
-		this.site = site;
-	}
-	
-	public Site getSite() {
-		return this.site;
-	}
-	
 }
