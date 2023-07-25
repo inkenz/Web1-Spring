@@ -39,7 +39,12 @@ public class SiteService implements ISiteService {
 
 	
 	public void salvar(Site site) {
-		Usuario u = new Usuario(site.getEmail(),site.getSenha(), "hotel");
+		Usuario u = new Usuario();
+		u.setEmail(site.getEmail());
+		u.setSenha(site.getSenha());
+		u.setEnabled(true);
+		u.setRole("ROLE_SITE");
+		
 		udao.save(u);
 		sdao.save(site);
 	}

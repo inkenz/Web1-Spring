@@ -45,7 +45,12 @@ public class HotelService implements IHotelService {
 		return lh;
 	}
 	public void salvar(Hotel hotel) {
-		Usuario u = new Usuario(hotel.getEmail(),hotel.getSenha(), "hotel");
+		Usuario u = new Usuario();
+		u.setEmail(hotel.getEmail());
+		u.setSenha(hotel.getSenha());
+		u.setEnabled(true);
+		u.setRole("ROLE_HOTEL");
+		
 		udao.save(u);
 		hdao.save(hotel);
 	}

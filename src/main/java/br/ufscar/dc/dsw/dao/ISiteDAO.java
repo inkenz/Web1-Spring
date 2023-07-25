@@ -10,8 +10,8 @@ import br.ufscar.dc.dsw.domain.Site;
 
 @SuppressWarnings("unchecked")
 public interface ISiteDAO extends CrudRepository<Site, String>{
-	@Query("SELECT s FROM Site s WHERE s.URL = :url")
-	Site findByURL(@Param("url") String url);
+	//@Query("SELECT s FROM Site s WHERE s.URL = :url")
+	Site findByURL(String url);
 	
 	Site findById(long id);
 	

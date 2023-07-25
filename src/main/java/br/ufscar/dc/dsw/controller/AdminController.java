@@ -26,6 +26,10 @@ public class AdminController {
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 	
+	@GetMapping("/index")
+	public String index() {
+		return "admin/index";
+	}
 	
 	@GetMapping("/cadastrarHotel")
 	public String cadastrar(Hotel hotel) {
@@ -36,11 +40,11 @@ public class AdminController {
 	@PostMapping("/salvarHotel")
 	public String salvarHotel(@Valid Hotel hotel, BindingResult result, RedirectAttributes attr) {
 		if (result.hasErrors()) {
-			return "hotel/cadastro";
+			return "admin/cadastroHotel";
 		}
 		hotel.setSenha(encoder.encode(hotel.getSenha()));
 		hservice.salvar(hotel);
-		//attr.addFlashAttribute("sucess", "editora.create.sucess");
+		attr.addFlashAttribute("sucess", "hotel.create.sucess");
 		return "redirect:/listarHoteis";
 	}
 	

@@ -13,9 +13,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 @Table(name = "Site")
@@ -48,12 +48,12 @@ public class Site{
 	@Column(nullable = false, unique = false, length = 15)
 	private String telefone;
 	
-	@OneToMany(targetEntity = Promocao.class, mappedBy = "Hotel", fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = Promocao.class, mappedBy = "site", fetch = FetchType.EAGER)
 	private Set<Promocao> promocoes;
 	
 	@OneToOne
 	private Usuario usuario;
-	
+	public Site() {}
 	public Site(String email, String senha, String endereco, String nome, String telefone){
 		this.email = email;
 		this.senha = senha;

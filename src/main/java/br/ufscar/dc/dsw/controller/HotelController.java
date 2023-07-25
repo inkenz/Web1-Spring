@@ -1,5 +1,7 @@
 package br.ufscar.dc.dsw.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +31,12 @@ public class HotelController {
 	
 	@GetMapping("/listar")
 	public String listar(ModelMap model) {
-		model.addAttribute("hoteis",service.buscarTodos());
+		List<Hotel> l1 = service.buscarTodos();
+		for(Hotel hotel: l1) {
+			System.out.print(hotel.getNome()+"\n");
+		}
+		
+		model.addAttribute("hoteis",l1);
 		return "hotel/lista";
 	}
 	
@@ -47,7 +54,7 @@ public class HotelController {
 	
 	@GetMapping("/editar/{id}")
 	public String preEditar(@PathVariable("id") String id, ModelMap model) {
-		model.addAttribute("editora", service.buscarPorCNPJ(id));
+		model.addAttribute("hotel", service.buscarPorCNPJ(id));
 		return "hotel/cadastro";
 	}
 	

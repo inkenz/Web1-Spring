@@ -12,8 +12,8 @@ import br.ufscar.dc.dsw.domain.Usuario;
 public interface IUsuarioDAO extends CrudRepository<Usuario, Long>{
 	Usuario findById(long id);
 	
-	@Query("SELECT u FROM Usuario u WHERE u.email = :email")
-    public Usuario getByEmail(@Param("email") String email);
+	//@Query("SELECT u FROM Usuario u WHERE u.email = :email")
+    Usuario getByEmail(String email);
 
 	List<Usuario> findAll();
 	

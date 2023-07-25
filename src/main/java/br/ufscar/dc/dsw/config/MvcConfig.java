@@ -15,10 +15,10 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 public class MvcConfig implements WebMvcConfigurer {
 
 	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/home").setViewName("home");
-		registry.addViewController("/").setViewName("inicio");
+		registry.addViewController("/home").setViewName("index");
+		registry.addViewController("/").setViewName("index");
 		registry.addViewController("/admin").setViewName("admin/index");
-		//registry.addViewController("/user").setViewName("user/index");
+		registry.addViewController("/user").setViewName("user/index");
 		registry.addViewController("/login").setViewName("login");
 	}
 

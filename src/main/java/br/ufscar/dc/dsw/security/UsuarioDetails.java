@@ -15,12 +15,16 @@ public class UsuarioDetails implements UserDetails {
     private Usuario user;
      
     public UsuarioDetails(Usuario user) {
+        //System.out.print("\n\n\n\nTESTEEEE: "+user.getEmail()+"\n\n\n");
         this.user = user;
     }
  
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getPapel());
+    	//System.out.print("\n\n\n\nTESTEEEE2: "+user.getPapel()+"\n\n\n");
+        
+    	
+    	SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole());
         return Arrays.asList(authority);
     }
  
@@ -31,6 +35,7 @@ public class UsuarioDetails implements UserDetails {
  
     @Override
     public String getUsername() {
+    	
         return user.getEmail();
     }
  

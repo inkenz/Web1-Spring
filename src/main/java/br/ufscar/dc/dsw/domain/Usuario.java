@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
  
 @Entity
 @Table(name = "Usuario")
@@ -14,24 +15,23 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
- 
+    
+    @NotBlank
     @Column(nullable = false, length = 45)
     private String email;
     
+    @NotBlank
     @Column(nullable = false, length = 64)
     private String senha;
     
-    @Column(nullable = false, length = 45)
-    private String papel;
+    @NotBlank
+    @Column(nullable = false, length = 10)
+    private String role;
     
     @Column(nullable = false)
     private boolean enabled;
 	
-    public Usuario(String email, String senha, String papel) {
-    	this.email=email;
-    	this.senha = senha;
-    	this.papel = papel;
-    }
+    
     
     public Long getId() {
 		return id;
@@ -57,12 +57,12 @@ public class Usuario {
 		this.senha = senha;
 	}
 	
-	public String getPapel() {
-		return papel;
+	public String getRole() {
+		return role;
 	}
 	
-	public void setPapel(String papel) {
-		this.papel = papel;
+	public void setRole(String role) {
+		this.role = role;
 	}
 	
 	public boolean isEnabled() {
@@ -71,5 +71,11 @@ public class Usuario {
 	
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+	
+	// PARA DEBUG
+    @Override
+	public String toString() {
+		return "Usuario = [Email = " + email + ", papel=" + role + "]\n";
 	}
 }

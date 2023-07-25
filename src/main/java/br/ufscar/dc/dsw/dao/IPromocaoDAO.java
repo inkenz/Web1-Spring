@@ -12,10 +12,10 @@ public interface IPromocaoDAO extends CrudRepository<Promocao, Long>{
 
 	Promocao findById(long id);
 	
-	@Query("SELECT p FROM Promocao p WHERE p.CNPJ = 1")
+	//@Query("SELECT p FROM Promocao p WHERE p.CNPJ = 1")
 	Promocao findByCNPJ(String CNPJ);
 	
-	@Query("SELECT p FROM Promocao p WHERE p.endereco = 1")
+	//@Query("SELECT p FROM Promocao p WHERE p.endereco = 1")
 	Promocao findByEndereco(String endereco);
 	
 	List<Promocao> findAll();

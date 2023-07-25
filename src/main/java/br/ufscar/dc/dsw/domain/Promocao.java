@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.Min;
@@ -46,6 +47,27 @@ public class Promocao{
 	@Column(nullable = false, unique = false)
 	private Date fim;
 	
+	@ManyToOne
+	private Hotel hotel;
+	
+	public void setHotel(Hotel hotel) {
+		this.hotel = hotel;
+	}
+	public Hotel getHotel() {
+		return hotel;
+	}
+	
+	@ManyToOne 
+	private Site site;
+	
+	public void setSite(Site site) {
+		this.site = site;
+	}
+	
+	public Site getSite() {
+		return site;
+	}
+	public Promocao() {}
 	public Promocao(String endereco, String CNPJ, float preco, Date inicio, Date fim){
 		this.endereco = endereco;
 		this.CNPJ = CNPJ;

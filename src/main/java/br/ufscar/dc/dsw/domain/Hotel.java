@@ -14,9 +14,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import br.ufscar.dc.dsw.validation.UniqueCNPJ;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 
 @SuppressWarnings("serial")
@@ -51,12 +51,12 @@ public class Hotel {
 	@Column(nullable = false, unique = false, length = 50)
     private String cidade;
     
-	@OneToMany(targetEntity = Promocao.class, mappedBy = "Hotel", fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = Promocao.class, mappedBy = "hotel", fetch = FetchType.EAGER)
 	private Set<Promocao> promocoes;
 	
 	@OneToOne
 	private Usuario usuario;
-	
+	public Hotel() {}
     public Hotel(String email, String senha, String CNPJ, String nome, String cidade){
         this.email = email;
         this.senha = senha;

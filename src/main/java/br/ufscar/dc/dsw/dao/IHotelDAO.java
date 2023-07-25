@@ -10,8 +10,8 @@ import br.ufscar.dc.dsw.domain.Hotel;
 
 @SuppressWarnings("unchecked")
 public interface IHotelDAO extends CrudRepository<Hotel, Long>{
-	@Query("SELECT h FROM Hotel h WHERE h.CNPJ = :cnpj")
-	Hotel findByCNPJ(@Param("cnpj") String CNPJ);
+	//@Query("SELECT h FROM Hotel h WHERE h.CNPJ = :cnpj")
+	Hotel findByCNPJ(String CNPJ);
 	
 	Hotel findById(long id);
 	
