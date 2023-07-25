@@ -5,7 +5,8 @@ import java.util.List;
 import br.ufscar.dc.dsw.domain.Hotel;
 
 public interface IHotelService {
-
+	Hotel buscarPorId(long id);
+	
 	Hotel buscarPorCNPJ(String cnpj);
 
 	List<Hotel> buscarTodos();

@@ -32,7 +32,11 @@ public class AdminController {
 	}
 	
 	@GetMapping("/cadastrarHotel")
-	public String cadastrar(Hotel hotel) {
+	public String cadastrar(Hotel hotel, ModelMap model) {
+		Hotel h = new Hotel();
+		h.setId(null);
+		model.addAttribute("hotel", h);
+		
 		return "admin/cadastroHotel";
 	}
 	
@@ -45,20 +49,23 @@ public class AdminController {
 		hotel.setSenha(encoder.encode(hotel.getSenha()));
 		hservice.salvar(hotel);
 		attr.addFlashAttribute("sucess", "hotel.create.sucess");
-		return "redirect:/listarHoteis";
+		return "redirect:/hotel/listar";
 	}
 	
 	@GetMapping("/editarHotel/{id}")
 	public String preEditar(@PathVariable("id") String id, ModelMap model) {
-		model.addAttribute("editora", hservice.buscarPorCNPJ(id));
-		return "hotel/cadastro";
+		model.addAttribute("hotel", hservice.buscarPorId(Long.parseLong(id)));
+		return "admin/cadastroHotel";
 	}
 	
-	@PostMapping("/editar")
+	@PostMapping("/editarHotel")
 	public String editar(@Valid Hotel hotel, BindingResult result, RedirectAttributes attr) {
 		
+		// Apenas rejeita se o problema não for com o CNPJ (CNPJ campo read-only) 
+		
 		if (result.getFieldErrorCount() > 1 || result.getFieldError("CNPJ") == null) {
-			return "hotel/cadastro";
+			System.out.print("\n\n\n\n\n\nERRO NA EDIÇÃO\n\n\n\n\n\n");
+			return "admin/cadastroHotel";
 		}
 
 		hservice.salvar(hotel);
@@ -66,11 +73,11 @@ public class AdminController {
 		return "redirect:/hotel/listar";
 	}
 	
-	@GetMapping("/excluir/{id}")
+	@GetMapping("/excluirHotel/{id}")
 	public String excluir(@PathVariable("id") String id, ModelMap model) {
 		hservice.excluir(id);
 		model.addAttribute("sucess", "editora.delete.sucess");
 		
-		return "";//listar(model);
+		return "/hotel/listar";
 	}
 }

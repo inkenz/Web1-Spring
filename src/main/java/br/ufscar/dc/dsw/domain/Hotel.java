@@ -4,15 +4,10 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
 import br.ufscar.dc.dsw.validation.UniqueCNPJ;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -22,10 +17,7 @@ import javax.persistence.OneToOne;
 @SuppressWarnings("serial")
 @Entity
 @Table(name="Hotel")
-public class Hotel {
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-    private long id;
+public class Hotel extends AbstractEntity<Long>{
 	
 	
 	@UniqueCNPJ (message = "{Unique.editora.CNPJ}")
@@ -64,6 +56,8 @@ public class Hotel {
         this.nome = nome;
         this.cidade = cidade;
     }
+    
+    /*
     public Long getId() {
 		return id;
 	}
@@ -71,6 +65,7 @@ public class Hotel {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	*/
     public String getEmail(){
         return email;
     }
@@ -123,9 +118,11 @@ public class Hotel {
     }
     
     // PARA DEBUG
+    /*
     @Override
 	public String toString() {
 		return "Hotel = [Nome = " + nome + ", email=" + email +", senha="+senha+ "]";
 	}
+    */
     
 }

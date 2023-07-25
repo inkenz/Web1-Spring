@@ -19,7 +19,7 @@ import javax.persistence.OneToOne;
 
 @Entity
 @Table(name = "Site")
-public class Site{
+public class Site extends AbstractEntity<Long>{
 	
 	@Size(min = 3,max = 256)
 	@NotEmpty
@@ -30,10 +30,7 @@ public class Site{
 	@Column(nullable = false, unique = false, length = 100)
 	private String senha;
 	
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-    private long id;
-	
+
 	@NotEmpty
 	@Column(nullable = false, unique = false, length = 100)
 	private String URL;
@@ -53,6 +50,7 @@ public class Site{
 	
 	@OneToOne
 	private Usuario usuario;
+	
 	public Site() {}
 	public Site(String email, String senha, String endereco, String nome, String telefone){
 		this.email = email;
@@ -61,7 +59,7 @@ public class Site{
 		this.nome = nome;
 		this.telefone = telefone;
 	}
-	
+/*	
 	public long getId() {
 		return id;
 	}
@@ -69,7 +67,7 @@ public class Site{
 	public void setId(long id) {
 		this.id = id;
 	}
-	
+	*/
 	public String getTelefone() {
 		return telefone;
 	}
@@ -124,8 +122,10 @@ public class Site{
     }
     
     // PARA DEBUG
+    /*
     @Override
 	public String toString() {
 		return "Site = [Nome = " + nome + ", email=" + email +", senha="+senha+ "]";
 	}
+	*/
 }

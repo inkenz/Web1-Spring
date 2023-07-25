@@ -32,10 +32,11 @@ public class HotelController {
 	@GetMapping("/listar")
 	public String listar(ModelMap model) {
 		List<Hotel> l1 = service.buscarTodos();
+		/*
 		for(Hotel hotel: l1) {
-			System.out.print(hotel.getNome()+"\n");
+			System.out.print(hotel);
 		}
-		
+		*/
 		model.addAttribute("hoteis",l1);
 		return "hotel/lista";
 	}

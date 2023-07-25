@@ -16,12 +16,12 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="Promocao")
-public class Promocao{
-	
+public class Promocao  extends AbstractEntity<Long>{
+	/*
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+	*/
 	@Size(min = 3)
 	@NotEmpty
 	@Column(nullable = false, unique = false, length = 70)
@@ -75,7 +75,7 @@ public class Promocao{
 		this.inicio = inicio;
 		this.fim = fim;
 	}
-	
+	/*
 	public long getId() {
 		return id;
 	}
@@ -83,7 +83,7 @@ public class Promocao{
 	public void setId(long id) {
 		this.id = id;
 	}
-	
+	*/
 	public String getEndereco() {
 		return endereco;
 	}

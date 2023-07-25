@@ -69,6 +69,11 @@ public class HotelService implements IHotelService {
 	public boolean hotelTemPromocoes(String cnpj) {
 		return pdao.findByCNPJ(cnpj) != null;
 	}
+
+	@Override
+	public Hotel buscarPorId(long id) {
+		return hdao.findById(id);
+	}
 	
 
 }
