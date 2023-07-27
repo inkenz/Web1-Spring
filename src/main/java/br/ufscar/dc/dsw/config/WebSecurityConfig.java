@@ -44,11 +44,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				.antMatchers("/", "/index", "/error").permitAll()
-				.antMatchers("/login/**", "/js/**", "/css/**", "/image/**", "/hotel/listar","/hotel/lista").permitAll()
+				.antMatchers("/login/**", "/site/listar", "/site/lista", "/image/**", "/hotel/listar","/hotel/lista").permitAll()
 				.antMatchers("/admin/**").hasRole("ADMIN")
 				.antMatchers("/hotel/listarPromocoes","/hotel/index").hasRole("HOTEL")
 				.antMatchers("/hotel/index").hasRole("HOTEL")
-				.antMatchers("/site/**").hasRole("SITE")
+				.antMatchers("/site/listarPromocoes","/site/", "/site/index").hasRole("SITE")
 				.anyRequest().authenticated()
 			.and()
 				.formLogin()

@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import br.ufscar.dc.dsw.domain.Site;
 
 @SuppressWarnings("unchecked")
-public interface ISiteDAO extends CrudRepository<Site, String>{
+public interface ISiteDAO extends CrudRepository<Site, Long>{
 	//@Query("SELECT s FROM Site s WHERE s.URL = :url")
 	Site findByURL(String url);
 	
@@ -19,5 +19,6 @@ public interface ISiteDAO extends CrudRepository<Site, String>{
 	
 	Site save(Site site);
 
-	void deleteByURL(String url);
+	void deleteById(Long id);
+
 }

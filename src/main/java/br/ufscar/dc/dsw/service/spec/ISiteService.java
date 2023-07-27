@@ -5,14 +5,16 @@ import java.util.List;
 import br.ufscar.dc.dsw.domain.Site;
 
 public interface ISiteService {
-
+	
+	Site buscarPorId(long id);
+	
 	Site buscarPorEndereco(String endereco);
 
 	List<Site> buscarTodos();
 
 	void salvar(Site site);
 
-	void excluir(String endereco);
+	void excluir(long id);
 	
 	boolean siteTemPromocoes(String endereco);
 }

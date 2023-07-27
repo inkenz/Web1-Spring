@@ -3,15 +3,15 @@ package br.ufscar.dc.dsw.domain;
 import java.util.Set;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+
+import br.ufscar.dc.dsw.validation.UniqueCNPJ;
+import br.ufscar.dc.dsw.validation.UniqueURL;
 
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -20,9 +20,9 @@ import javax.persistence.OneToOne;
 @Entity
 @Table(name = "Site")
 public class Site extends AbstractEntity<Long>{
-	
 	@Size(min = 3,max = 256)
 	@NotEmpty
+	@Email
 	@Column(nullable = false, unique = true, length = 50)
 	private String email;
 	
@@ -30,18 +30,18 @@ public class Site extends AbstractEntity<Long>{
 	@Column(nullable = false, unique = false, length = 100)
 	private String senha;
 	
-
-	@NotEmpty
+	@UniqueURL (message = "{Unique.site.URL}")
+	@NotEmpty(message = "{NotEmpty.site.URL}")
 	@Column(nullable = false, unique = false, length = 100)
 	private String URL;
 	
 	@Size(min = 3)
-	@NotEmpty
+	@NotEmpty(message = "{NotEmpty.site.nome}")
 	@Column(nullable = false, unique = false, length = 70)
 	private String nome;
 	
 	@NotEmpty
-	@Size(min = 1,max = 15)
+	@Size(min = 1,max = 15, message = "{Size.site.telefone}")
 	@Column(nullable = false, unique = false, length = 15)
 	private String telefone;
 	
@@ -59,7 +59,7 @@ public class Site extends AbstractEntity<Long>{
 		this.nome = nome;
 		this.telefone = telefone;
 	}
-/*	
+	/*	
 	public long getId() {
 		return id;
 	}
@@ -89,7 +89,7 @@ public class Site extends AbstractEntity<Long>{
 	}
 	
 	public void setURL(String URL) {
-		URL = URL;
+		this.URL = URL;
 	}
 	
 	public String getSenha() {

@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -20,14 +21,15 @@ import javax.persistence.OneToOne;
 public class Hotel extends AbstractEntity<Long>{
 	
 	
-	@UniqueCNPJ (message = "{Unique.editora.CNPJ}")
+	@UniqueCNPJ (message = "{Unique.hotel.CNPJ}")
 	@NotBlank
-	@Size(min = 18, max = 18, message = "{Size.editora.CNPJ}")
+	@Size(min = 18, max = 18, message = "{Size.hotel.CNPJ}")
 	@Column(nullable = false, unique = true, length = 60)
 	private String CNPJ;
 	
 	@NotEmpty
-	//@Size(max = 60)
+	@Size(max = 60)
+	@Email
 	@Column(nullable = false, unique = true, length = 50)
     private String email;
 	

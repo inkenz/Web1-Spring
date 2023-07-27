@@ -30,7 +30,12 @@ public class SiteService implements ISiteService {
 	public Site buscarPorEndereco(String endereco) {
 		return sdao.findByURL(endereco);
 	}
-
+	
+	@Transactional(readOnly = true)
+	public Site buscarPorId(long id) {
+		return sdao.findById(id);
+	}
+	
 	@Transactional(readOnly = true)
 	public List<Site> buscarTodos() {
 		return sdao.findAll();
@@ -50,19 +55,19 @@ public class SiteService implements ISiteService {
 	}
 
 	
-	public void excluir(String endereco) {
-		udao.deleteByEmail(this.buscarPorEndereco(endereco).getEmail());
-		if(this.siteTemPromocoes(endereco)) {
-			while(this.siteTemPromocoes(endereco)) {
-				pdao.deleteById(pdao.findByEndereco(endereco).getId());
+	public void excluir(long id) {
+		udao.deleteByEmail(this.buscarPorId(id).getEmail());
+		if(this.siteTemPromocoes(this.buscarPorId(id).getURL())) {
+			while(this.siteTemPromocoes(this.buscarPorId(id).getURL())) {
+				pdao.deleteById(pdao.findByURL(this.buscarPorId(id).getURL()).getId());
 			}
 		}	
-		sdao.deleteByURL(endereco);
+		sdao.deleteById(id);
 	}
 
 	@Transactional(readOnly = true)
 	public boolean siteTemPromocoes(String endereco) {
-		return pdao.findByEndereco(endereco) != null;
+		return pdao.findByURL(endereco) != null;
 	}
 		
 

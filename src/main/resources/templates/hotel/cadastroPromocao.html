@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title th:text="#{hotel.cadastro.promocao}"></title>
+</head>
+
+<body>
+	<form th:action="@{/hotel/salvarPromocao}" th:object="${promocao}" method="POST">
+		<label th:text="#{promocao.nome.label}" for="nome"></label>
+		<label th:text="#{promocao.site}"></label>
+		<select id="URL">
+			<option th:each="site: ${sites}" th:value="${site.URL}" th:text="${site.nome}"></option>
+		</select>
+		</br>
+		
+		<label th:text="#{promocao.preco}"></label>
+		<input type="number" id="preco" name="preco" min="1" step="0.01" autofocus="autofocus" th:field="*{preco}" /></br>
+		
+		<div class="invalid-feedback">
+			<span th:errors="*{preco}"></span>
+		</div>
+
+		<label th:text="#{promocao.inicio}"></label>
+		<input type="date" id="inicio" name="inicio" th:name="inicio" class="form-control" th:field="*{inicio}"
+		autofocus="autofocus"/><br />
+		
+		<div class="invalid-feedback">
+			<span th:errors="*{inicio}"></span>
+		</div>
+		
+		<label th:text="#{promocao.fim}"></label>
+		<input type="date" id="fim" name="fim" th:name="fim" class="form-control" th:field="*{fim}"
+		autofocus="autofocus"/><br />
+		
+		<div class="invalid-feedback">
+			<span th:errors="*{fim}"></span>
+		</div>
+		
+		<input type="hidden" id="CNPJ" name="CNPJ" value="${hotelCNPJ}" th:field="*{CNPJ}">
+		<input type="hidden" id="id" th:field="*{id}" />
+		<button type="submit" th:text="#{button.salvar.label}" class="btn btn-primary btn-sm"></button>
+	</form>
+</body>
+
+</html>

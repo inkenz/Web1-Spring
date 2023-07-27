@@ -44,7 +44,7 @@ public class PromocaoService implements IPromocaoService {
 		List<Promocao> lp = null;
 		
 		for(Promocao p: pdao.findAll()) {
-			if(p.getEndereco() == site.getURL()) lp.add(p);
+			if(p.getURL() == site.getURL()) lp.add(p);
 		}
 		
 		return lp;

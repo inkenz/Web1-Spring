@@ -4,7 +4,9 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -15,67 +17,61 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.ufscar.dc.dsw.domain.Hotel;
+import br.ufscar.dc.dsw.domain.Promocao;
+import br.ufscar.dc.dsw.domain.Site;
 import br.ufscar.dc.dsw.service.spec.IHotelService;
+import br.ufscar.dc.dsw.service.spec.IPromocaoService;
+import br.ufscar.dc.dsw.service.spec.ISiteService;
 
 @Controller
 @RequestMapping("/hotel")
 public class HotelController {
 	
 	@Autowired
-	private IHotelService service;
+	private IHotelService hservice;
+	@Autowired
+	private ISiteService sservice;
+	@Autowired
+	private IPromocaoService pservice;
 	
-	@GetMapping("/cadastrar")
-	public String cadastrar(Hotel hotel) {
-		return "hotel/cadastro";
+	@GetMapping(value={"/index","/"})
+	public String index1() {
+		return "hotel/index";
 	}
 	
 	@GetMapping("/listar")
 	public String listar(ModelMap model) {
-		List<Hotel> l1 = service.buscarTodos();
-		/*
-		for(Hotel hotel: l1) {
-			System.out.print(hotel);
-		}
-		*/
+		List<Hotel> l1 = hservice.buscarTodos();
+		
 		model.addAttribute("hoteis",l1);
 		return "hotel/lista";
 	}
 	
-	@PostMapping("/salvar")
-	public String salvar(@Valid Hotel hotel, BindingResult result, RedirectAttributes attr) {
+	@GetMapping("/cadastrarPromocao")
+	public String cadastrarPromocao(Promocao promocao, ModelMap model) {
+		List<Site> sites = sservice.buscarTodos();
+		Authentication a = SecurityContextHolder.getContext().getAuthentication();
+		String email = a.getName();
 		
+		System.out.print("\n\n\n\n"+email+"\n\n\n\n");
+		
+		String cnpj = hservice.buscarPorEmail(email).getCNPJ();
+		System.out.print("\n\n\n\n O CNPJ É: "+cnpj+"\n\n\n\n");
+		
+		model.addAttribute("sites",sites);
+		model.addAttribute("hotelCNPJ", cnpj);
+		model.addAttribute("promocao", promocao);
+		return "hotel/cadastroPromocao";
+	}
+	
+	@PostMapping("/salvarPromocao")
+	public String salvarSite(@Valid Promocao promocao, BindingResult result, RedirectAttributes attr, ModelMap model) {
 		if (result.hasErrors()) {
-			return "hotel/cadastro";
+			return cadastrarPromocao(promocao, model);
 		}
 		
-		service.salvar(hotel);
-		//attr.addFlashAttribute("sucess", "editora.create.sucess");
-		return "redirect:/editoras/listar";
-	}
-	
-	@GetMapping("/editar/{id}")
-	public String preEditar(@PathVariable("id") String id, ModelMap model) {
-		model.addAttribute("hotel", service.buscarPorCNPJ(id));
-		return "hotel/cadastro";
-	}
-	
-	@PostMapping("/editar")
-	public String editar(@Valid Hotel hotel, BindingResult result, RedirectAttributes attr) {
-		
-		if (result.getFieldErrorCount() > 1 || result.getFieldError("CNPJ") == null) {
-			return "hotel/cadastro";
-		}
-
-		service.salvar(hotel);
-		//attr.addFlashAttribute("sucess", "editora.edit.sucess");
-		return "redirect:/hotel/listar";
-	}
-	
-	@GetMapping("/excluir/{id}")
-	public String excluir(@PathVariable("id") String id, ModelMap model) {
-		service.excluir(id);
-		model.addAttribute("sucess", "editora.delete.sucess");
-		
-		return listar(model);
+		pservice.salvar(promocao);
+		attr.addFlashAttribute("sucess", "site.create.sucess");
+		return "redirect:/hotel/index";
 	}
 }

@@ -2,9 +2,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>OIOIOI</title>
+<title th:text="#{index.hotel.page}"></title>
 </head>
 <body>
-<h1>ÁREA DO HOTEL</h1>
+<h1 th:text="#{index.hotel.page}"></h1>
+<a th:href="@{/hotel/cadastrarPromocao}">#{hotel.cadastrar.promocao}></a> </br> 
+<a th:href="@{/hotel/listarPromocoes}">#{hotel.listar.promocao}></a> 
 </body>
 </html>

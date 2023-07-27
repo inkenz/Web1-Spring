@@ -6,20 +6,20 @@ import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.ufscar.dc.dsw.dao.IHotelDAO;
-import br.ufscar.dc.dsw.domain.Hotel;
+import br.ufscar.dc.dsw.dao.ISiteDAO;
+import br.ufscar.dc.dsw.domain.Site;
 
 @Component
-public class UniqueCNPJValidator implements ConstraintValidator<UniqueCNPJ, String> {
+public class UniqueURLValidator implements ConstraintValidator<UniqueURL, String> {
 
 	@Autowired
-	private IHotelDAO dao;
+	private ISiteDAO dao;
 
 	@Override
-	public boolean isValid(String CNPJ, ConstraintValidatorContext context) {
+	public boolean isValid(String URL, ConstraintValidatorContext context) {
 		if (dao != null) {
-			Hotel hotel = dao.findByCNPJ(CNPJ);
-			return hotel == null;
+			Site site = dao.findByURL(URL);
+			return site == null;
 		} else {
 			return true;
 		}

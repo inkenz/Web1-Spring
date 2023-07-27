@@ -8,6 +8,8 @@ public interface IHotelService {
 	Hotel buscarPorId(long id);
 	
 	Hotel buscarPorCNPJ(String cnpj);
+	
+	Hotel buscarPorEmail(String email);
 
 	List<Hotel> buscarTodos();
 	
@@ -15,7 +17,7 @@ public interface IHotelService {
 
 	void salvar(Hotel hotel);
 
-	void excluir(String cnpj);
+	void excluir(long id);
 	
 	boolean hotelTemPromocoes(String cnpj);
 }
