@@ -3,15 +3,16 @@
 
 <head>
 	<meta charset="utf-8">
-	<title th:text="#{site.lista.page}"></title>
+	<title th:text="#{site.lista.message}"></title>
 </head>
 
 <body>
 	<div class="container" id="listagem">
-	<div sec:authorize="hasRole('ROLE_ADMIN')">
-		<a th:href="@{/admin/cadastrarSite}">#{admin.cadastrar.site}</a></br>
-	</div>
-		<!--<div th:replace="fragments/alert"></div>-->
+		<div sec:authorize="hasRole('ROLE_ADMIN')">
+			<a th:href="@{/admin/cadastrarSite}" th:text="#{admin.cadastrar.site}"></a></br>
+		</div>
+		<!--<div th:replace="fragments/alert"></div>
+	-->
 		<div class="table-responsive">
 			<table class="table table-striped table-hover table-sm">
 				<thead>
@@ -31,12 +32,13 @@
 						<td th:text="${site.telefone}"></td>
 
 						<td>
+
 							<div sec:authorize="hasRole('ROLE_ADMIN')">
-								<a th:href="@{/admin/editarSite/{id} (id=${site.id}) }">
-									#{admin.editar}
+								<a th:href="@{/admin/editarSite/{id} (id=${site.id}) }"
+								th:text="#{admin.editar}">
 								</a> </br>
-								<a th:href="@{/admin/excluirSite/{id} (id=${site.id}) }">
-									#{admin.excluir}
+								<a th:href="@{/admin/excluirSite/{id} (id=${site.id}) }"
+								th:text="#{admin.excluir}">
 								</a>
 							</div>
 						</td>

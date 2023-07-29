@@ -2,16 +2,22 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<title th:text="#{hotel.cadastro.promocao}"></title>
+	<meta charset="utf-8">
+	<title th:text="#{hotel.cadastrar.promocao}"></title>
 </head>
 
 <body>
 	<form th:action="@{/hotel/salvarPromocao}" th:object="${promocao}" method="POST">
-		<label th:text="#{promocao.nome.label}" for="nome"></label>
-		<label th:text="#{promocao.site}"></label>
-		<select id="URL">
-			<option th:each="site: ${sites}" th:value="${site.URL}" th:text="${site.nome}"></option>
+		
+		<h1 th:text="#{hotel.cadastrar.promocao}"></h1>
+		<div class="invalid-feedback">
+			<span th:errors="*{global}"></span>
+		</div>
+		
+		</br>
+		<label th:text="#{promocao.site}" th:field="*{URL}"></label>
+		<select id="URL" th:field="*{URL}">
+			<option th:each="site: ${sites}"  th:value="${site.URL}" th:text="${site.nome}"></option>
 		</select>
 		</br>
 		
@@ -23,7 +29,7 @@
 		</div>
 
 		<label th:text="#{promocao.inicio}"></label>
-		<input type="date" id="inicio" name="inicio" th:name="inicio" class="form-control" th:field="*{inicio}"
+		<input type="date" id="inicio" name="inicio" class="form-control" th:field="*{inicio}"
 		autofocus="autofocus"/><br />
 		
 		<div class="invalid-feedback">
@@ -31,15 +37,16 @@
 		</div>
 		
 		<label th:text="#{promocao.fim}"></label>
-		<input type="date" id="fim" name="fim" th:name="fim" class="form-control" th:field="*{fim}"
+		<input type="date" id="fim" name="fim" class="form-control" th:field="*{fim}"
 		autofocus="autofocus"/><br />
 		
 		<div class="invalid-feedback">
 			<span th:errors="*{fim}"></span>
 		</div>
 		
-		<input type="hidden" id="CNPJ" name="CNPJ" value="${hotelCNPJ}" th:field="*{CNPJ}">
 		<input type="hidden" id="id" th:field="*{id}" />
+		<input type="hidden" id="CNPJ" th:field="*{CNPJ}" name="CNPJ" th:value="${promocao.CNPJ}"/>
+		
 		<button type="submit" th:text="#{button.salvar.label}" class="btn btn-primary btn-sm"></button>
 	</form>
 </body>

@@ -1,5 +1,6 @@
 package br.ufscar.dc.dsw.domain;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -10,6 +11,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import br.ufscar.dc.dsw.validation.UniqueCNPJ;
+import br.ufscar.dc.dsw.validation.UniqueEmail;
+
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -27,6 +30,7 @@ public class Hotel extends AbstractEntity<Long>{
 	@Column(nullable = false, unique = true, length = 60)
 	private String CNPJ;
 	
+	@UniqueEmail(message = "{Unique.email}")
 	@NotEmpty
 	@Size(max = 60)
 	@Email
@@ -46,7 +50,7 @@ public class Hotel extends AbstractEntity<Long>{
     private String cidade;
     
 	@OneToMany(targetEntity = Promocao.class, mappedBy = "hotel", fetch = FetchType.EAGER)
-	private Set<Promocao> promocoes;
+	private List<Promocao> promocoes;
 	
 	@OneToOne
 	private Usuario usuario;
@@ -112,10 +116,10 @@ public class Hotel extends AbstractEntity<Long>{
     public void setUsuario(Usuario user) {
     	this.usuario = user;
     }
-    public Set<Promocao> getPromocoes(){
+    public List<Promocao> getPromocoes(){
     	return this.promocoes;
     }
-    public void setPromocoes(Set<Promocao> promocoes) {
+    public void setPromocoes(List<Promocao> promocoes) {
     	this.promocoes = promocoes;
     }
     

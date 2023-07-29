@@ -9,6 +9,9 @@ public interface ISiteService {
 	Site buscarPorId(long id);
 	
 	Site buscarPorEndereco(String endereco);
+	
+	Site buscarPorEmail(String email);
+	
 
 	List<Site> buscarTodos();
 

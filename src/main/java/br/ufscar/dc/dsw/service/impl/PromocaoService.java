@@ -1,5 +1,6 @@
 package br.ufscar.dc.dsw.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,11 +29,11 @@ public class PromocaoService implements IPromocaoService {
 
 
 	@Transactional(readOnly = true)
-	public List<Promocao> buscarTodosPorHotel(Hotel hotel) {
-		List<Promocao> lp = null;
+	public List<Promocao> buscarTodosPorHotel(String CNPJ) {
+		List<Promocao> lp = new ArrayList<Promocao>();
 	
 		for(Promocao p: pdao.findAll()) {
-			if(p.getCNPJ() == hotel.getCNPJ()) lp.add(p);
+			if(p.getCNPJ().equals(CNPJ)) lp.add(p);
 		}
 		
 		return lp;
@@ -40,13 +41,12 @@ public class PromocaoService implements IPromocaoService {
 
 
 	@Transactional(readOnly = true)
-	public List<Promocao> buscarTodosPorSite(Site site) {
-		List<Promocao> lp = null;
+	public List<Promocao> buscarTodosPorSite(String URL) {
+		List<Promocao> lp = new ArrayList<Promocao>();
 		
 		for(Promocao p: pdao.findAll()) {
-			if(p.getURL() == site.getURL()) lp.add(p);
-		}
-		
+			if(p.getURL().equals(URL)) lp.add(p);
+		}	
 		return lp;
 	}
 

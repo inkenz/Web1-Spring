@@ -3,16 +3,26 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Insert title here</title>
+	<title th:text="#{hotel.lista.message}"></title>
 </head>
 
 <body>
 	<div class="container" id="listagem">
+		<label th:text="#{hotel.lista.filtro}"> 
+		</label>
+		<form th:action="@{/hotel/listar}" method="GET">
+			<select id="cidade" name="cidade">
+				<option value="" th:text="#{hotel.lista.cidades.todas}"></option>
+				<option th:each="cidade: ${cidades}" th:value="${cidade}" th:text="${cidade}"></option>
+			</select>
+			<button type="submit" th:text="#{hotel.filtrar}"></button>
+		</form>
+		
+		
+		
 		<div sec:authorize="hasRole('ROLE_ADMIN')">
-			<a th:href="@{/admin/cadastrarHotel}">#{admin.cadastrar.hotel}</a></br>
+			<a th:href="@{/admin/cadastrarHotel}" th:text="#{admin.cadastrar.hotel}"></a></br>
 		</div>
-		<!--<div th:replace="fragments/alert"></div>
-	-->
 		<div class="table-responsive">
 			<table class="table table-striped table-hover table-sm">
 				<thead>
@@ -32,13 +42,12 @@
 						<td th:text="${hotel.CNPJ}"></td>
 
 						<td>
-
 							<div sec:authorize="hasRole('ROLE_ADMIN')">
-								<a th:href="@{/admin/editarHotel/{id} (id=${hotel.id}) }">
-									#{admin.editar}
+								<a th:href="@{/admin/editarHotel/{id} (id=${hotel.id}) }" 
+								th:text="#{admin.editar}">	
 								</a> </br>
-								<a th:href="@{/admin/excluirHotel/{id} (id=${hotel.id}) }">
-									#{admin.excluir}
+								<a th:href="@{/admin/excluirHotel/{id} (id=${hotel.id}) }"
+								th:text="#{admin.excluir}">
 								</a>
 							</div>
 						</td>

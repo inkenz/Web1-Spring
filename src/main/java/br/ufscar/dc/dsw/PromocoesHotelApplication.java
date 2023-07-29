@@ -1,7 +1,5 @@
 package br.ufscar.dc.dsw;
 
-import java.util.List;
-
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,17 +11,20 @@ import br.ufscar.dc.dsw.dao.IPromocaoDAO;
 import br.ufscar.dc.dsw.dao.ISiteDAO;
 import br.ufscar.dc.dsw.dao.IUsuarioDAO;
 import br.ufscar.dc.dsw.domain.Hotel;
+import br.ufscar.dc.dsw.domain.Promocao;
 import br.ufscar.dc.dsw.domain.Site;
 import br.ufscar.dc.dsw.domain.Usuario;
+import java.sql.Date;
+import java.util.Random;
 
 @SpringBootApplication
 public class PromocoesHotelApplication {
-
+	
 	public static void main(String[] args) {
 		SpringApplication.run(PromocoesHotelApplication.class, args);
 	}
 	@Bean
-	public CommandLineRunner demo(IUsuarioDAO usuarioDAO, BCryptPasswordEncoder encoder, IHotelDAO hotelDAO, ISiteDAO siteDAO, IPromocaoDAO promoDAO) {
+	public CommandLineRunner demo(IUsuarioDAO usuarioDAO, BCryptPasswordEncoder encoder, IHotelDAO hotelDAO, ISiteDAO siteDAO, IPromocaoDAO promocaoDAO) {
 		return (args) -> {		
 			
 			Usuario u1 = new Usuario();
@@ -34,7 +35,6 @@ public class PromocoesHotelApplication {
 			usuarioDAO.save(u1);
 			
 			Hotel h1 = new Hotel("hotel1@hotel.com", encoder.encode("123"), "52.183.821/0001-04", "Hotel 1", "São Paulo");
-		
 			
 			Usuario u2 = new Usuario();
 			u2.setEmail(h1.getEmail());
@@ -66,6 +66,50 @@ public class PromocoesHotelApplication {
 			usuarioDAO.save(u4);
 			h1.setUsuario(u4);
 			hotelDAO.save(h3);
+			
+			Hotel h = new Hotel("hotel4@hotel.com", encoder.encode("123"), "57.232.100/0001-09", "Hotel 4", "Rio de Janeiro");
+			
+			Usuario u = new Usuario();
+			u.setEmail(h.getEmail());
+			u.setSenha(h.getSenha());
+			u.setEnabled(true);
+			u.setRole("ROLE_HOTEL");
+			usuarioDAO.save(u);
+			h.setUsuario(u);
+			hotelDAO.save(h);
+			
+			h = new Hotel("hotel5@hotel.com", encoder.encode("123"), "57.232.101/0001-09", "Hotel 5", "Rio de Janeiro");
+			
+			u = new Usuario();
+			u.setEmail(h.getEmail());
+			u.setSenha(h.getSenha());
+			u.setEnabled(true);
+			u.setRole("ROLE_HOTEL");
+			usuarioDAO.save(u);
+			h.setUsuario(u);
+			hotelDAO.save(h);
+			
+			h = new Hotel("hotel6@hotel.com", encoder.encode("123"), "57.232.101/1001-09", "Hotel 6", "Rio de Janeiro");
+			
+			u = new Usuario();
+			u.setEmail(h.getEmail());
+			u.setSenha(h.getSenha());
+			u.setEnabled(true);
+			u.setRole("ROLE_HOTEL");
+			usuarioDAO.save(u);
+			h.setUsuario(u);
+			hotelDAO.save(h);
+			
+			h = new Hotel("hotel7@hotel.com", encoder.encode("123"), "67.232.101/0001-09", "Hotel 7", "Macapá");
+			
+			u = new Usuario();
+			u.setEmail(h.getEmail());
+			u.setSenha(h.getSenha());
+			u.setEnabled(true);
+			u.setRole("ROLE_HOTEL");
+			usuarioDAO.save(u);
+			h.setUsuario(u);
+			hotelDAO.save(h);
 			
 			Site s1 = new Site("site1@site.com", encoder.encode("123"), "site1.com.br", "Site 1", "11963169791");
 			
@@ -100,17 +144,32 @@ public class PromocoesHotelApplication {
 			s3.setUsuario(u7);
 			siteDAO.save(s3);
 			
+			Promocao p1 = new Promocao(s1.getURL(),h1.getCNPJ(),1000, new Date(2023-1900,12,13), new Date(2023-1900,12,24));
+			promocaoDAO.save(p1);
 			
-			List<Hotel> l1 = hotelDAO.findAll();
-			for(Hotel hotel: l1) {
-				System.out.print(hotel.getNome()+"\n");
-			}
-			
-			List<Site> l2 = siteDAO.findAll();
-			for(Site site: l2) {
-				System.out.print(site.getNome()+"\n");
-			}
-			
+			//List<Promocao> l1 = new ArrayList<Promocao>();
+			//l1.add(p1);
+			//h1.setPromocoes(l1);
+			//hotelDAO.save(h1);
 		};
+	}
+
+	private static String gerarCNPJ() {
+		Random random = new Random();
+
+		int[] cnpjArray = new int[14];
+		for (int i = 0; i < 14; i++) {
+			if (i == 2 || i == 6) {
+				cnpjArray[i] = '.';
+			} else if (i == 10) {
+				cnpjArray[i] = '/';
+			} else if (i == 13) {
+				cnpjArray[i] = '-';
+			} else {
+				cnpjArray[i] = random.nextInt(10);
+			}
+		}
+		
+		return new String(cnpjArray, 0, 14);
 	}
 }

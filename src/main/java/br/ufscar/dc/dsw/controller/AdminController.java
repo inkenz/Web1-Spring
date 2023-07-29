@@ -76,7 +76,7 @@ public class AdminController {
 		System.out.print(result.getFieldError("CNPJ"));
 		
 		
-		if (result.getFieldErrorCount() > 1 || result.getFieldError("CNPJ") == null) {
+		if (result.getFieldErrorCount() > 1 || result.getFieldError("CNPJ") == null ||  result.getFieldError("email") == null) {
 			System.out.print("\n\n\n\n\n\nERRO NA EDIÇÃO\n\n\n\n\n\n");
 			return "admin/cadastroHotel";
 		}
@@ -144,7 +144,11 @@ public class AdminController {
 		System.out.print("\n\n");
 		System.out.print(result.getFieldError("email"));
 		
-		if (result.getFieldErrorCount() > 1 || result.getFieldError("URL") == null) {
+		if (result.getFieldError("nome") != null || 
+				result.getFieldError("telefone") != null ||
+				result.getFieldError("senha") != null ||
+				site.getEmail().isEmpty()
+				) {
 			System.out.print("\n\n\n\n\n\nERRO NA EDIÇÃO\n\n\n\n\n\n");
 			return "admin/cadastroSite";
 		}
@@ -156,6 +160,18 @@ public class AdminController {
 	
 	@GetMapping("/excluirSite/{id}")
 	public String excluirS(@PathVariable("id") String id, ModelMap model) {
+		System.out.print("\n\n");
+		System.out.print("\n\n");
+		System.out.print("\n\n\n\n\n\n\n");
+		System.out.print("\n\n");
+		System.out.print(id);
+		System.out.print("\n\n");
+		
+		Site site = sservice.buscarPorId(Long.parseLong(id));
+		if(site != null) {
+			System.out.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+			
+		}
 		sservice.excluir(Long.parseLong(id));
 		model.addAttribute("sucess", "site.delete.sucess");
 		

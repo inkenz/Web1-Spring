@@ -32,6 +32,11 @@ public class SiteService implements ISiteService {
 	}
 	
 	@Transactional(readOnly = true)
+	public Site buscarPorEmail(String email) {
+		return sdao.findByEmail(email);
+	}
+	
+	@Transactional(readOnly = true)
 	public Site buscarPorId(long id) {
 		return sdao.findById(id);
 	}
@@ -57,12 +62,14 @@ public class SiteService implements ISiteService {
 	
 	public void excluir(long id) {
 		udao.deleteByEmail(this.buscarPorId(id).getEmail());
-		if(this.siteTemPromocoes(this.buscarPorId(id).getURL())) {
-			while(this.siteTemPromocoes(this.buscarPorId(id).getURL())) {
-				pdao.deleteById(pdao.findByURL(this.buscarPorId(id).getURL()).getId());
+		String URL = this.buscarPorId(id).getURL();
+		sdao.deleteById(id);
+			
+		if(this.siteTemPromocoes(URL)) {
+			while(this.siteTemPromocoes(URL)) {
+				pdao.deleteById(pdao.findByURL(URL).getId());
 			}
 		}	
-		sdao.deleteById(id);
 	}
 
 	@Transactional(readOnly = true)

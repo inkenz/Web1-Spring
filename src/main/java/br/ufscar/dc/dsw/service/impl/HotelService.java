@@ -36,14 +36,21 @@ public class HotelService implements IHotelService {
 		return hdao.findAll();
 	}
 	
-	public List<Hotel> buscarTodosPorCidade(String cidade){
-		List<Hotel> lh = new ArrayList<Hotel>();
+	public List<String> buscarCidades(){
+		List<String> l = new ArrayList<String>();
+		List<Hotel> hoteis = this.buscarTodos();
 		
-		for(Hotel h: hdao.findAll()) {
-			if(h.getCidade() == cidade) lh.add(h);
+		for(Hotel hotel: hoteis) {
+			String cidade = hotel.getCidade();
+			if (!l.contains(cidade)) {
+	            l.add(cidade);
+	        }
 		}
-		
-		return lh;
+		return l;
+	}
+	
+	public List<Hotel> buscarTodosPorCidade(String cidade){
+		return hdao.findAllByCidade(cidade);
 	}
 	public void salvar(Hotel hotel) {
 		Usuario u = new Usuario();
@@ -57,13 +64,17 @@ public class HotelService implements IHotelService {
 	}
 
 	public void excluir(long id) {
+		System.out.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+		System.out.print(this.buscarPorId(id).getEmail());
+		System.out.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+		
 		udao.deleteByEmail(this.buscarPorId(id).getEmail());
-		if(this.hotelTemPromocoes(buscarPorId(id).getCNPJ())) {
-			while(this.hotelTemPromocoes(buscarPorId(id).getCNPJ())) {
-				pdao.deleteById(pdao.findByCNPJ(buscarPorId(id).getCNPJ()).getId());
-			}
-		}	
+		String CNPJ = buscarPorId(id).getCNPJ();
 		hdao.deleteById(id);
+		
+		while(this.hotelTemPromocoes(CNPJ)) {
+			pdao.deleteById(pdao.findByCNPJ(CNPJ).getId());
+		}
 	}
 
 	//@Transactional(readOnly = true);

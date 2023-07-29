@@ -17,6 +17,8 @@ public interface IHotelDAO extends CrudRepository<Hotel, Long>{
 	
 	List<Hotel> findAll();
 	
+	List<Hotel> findAllByCidade(String cidade);
+	
 	Hotel save(Hotel hotel);
 
 	void deleteByCNPJ(String CNPJ);

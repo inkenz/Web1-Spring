@@ -21,7 +21,7 @@ public class UsuarioService implements IUsuarioService {
 
 	@Transactional(readOnly = true)
 	public Usuario buscarPorEmail(String email) {
-		return udao.getByEmail(email);
+		return udao.findByEmail(email);
 	}
 
 	@Override

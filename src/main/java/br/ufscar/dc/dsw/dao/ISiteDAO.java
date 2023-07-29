@@ -15,6 +15,8 @@ public interface ISiteDAO extends CrudRepository<Site, Long>{
 	
 	Site findById(long id);
 	
+	Site findByEmail(String email);
+	
 	List<Site> findAll();
 	
 	Site save(Site site);

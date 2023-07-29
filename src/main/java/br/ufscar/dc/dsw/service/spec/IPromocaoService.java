@@ -10,8 +10,8 @@ public interface IPromocaoService {
 
 	Promocao buscarPorId(long id);
 
-	List<Promocao> buscarTodosPorHotel(Hotel hotel);
-	List<Promocao> buscarTodosPorSite(Site site);
+	List<Promocao> buscarTodosPorHotel(String CNPJ);
+	List<Promocao> buscarTodosPorSite(String URL);
 	
 	void salvar(Promocao promocao);
 	void excluir(Long id);

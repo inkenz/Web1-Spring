@@ -10,7 +10,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import br.ufscar.dc.dsw.validation.FormatoURL;
 import br.ufscar.dc.dsw.validation.UniqueCNPJ;
+import br.ufscar.dc.dsw.validation.UniqueEmail;
 import br.ufscar.dc.dsw.validation.UniqueURL;
 
 import javax.persistence.FetchType;
@@ -20,6 +22,8 @@ import javax.persistence.OneToOne;
 @Entity
 @Table(name = "Site")
 public class Site extends AbstractEntity<Long>{
+	
+	@UniqueEmail(message = "{Unique.email}")
 	@Size(min = 3,max = 256)
 	@NotEmpty
 	@Email
@@ -30,6 +34,7 @@ public class Site extends AbstractEntity<Long>{
 	@Column(nullable = false, unique = false, length = 100)
 	private String senha;
 	
+	@FormatoURL(message = "{Formato.URL}")
 	@UniqueURL (message = "{Unique.site.URL}")
 	@NotEmpty(message = "{NotEmpty.site.URL}")
 	@Column(nullable = false, unique = false, length = 100)

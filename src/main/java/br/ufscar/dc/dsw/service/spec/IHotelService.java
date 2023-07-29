@@ -10,11 +10,13 @@ public interface IHotelService {
 	Hotel buscarPorCNPJ(String cnpj);
 	
 	Hotel buscarPorEmail(String email);
-
+	
 	List<Hotel> buscarTodos();
 	
 	List<Hotel> buscarTodosPorCidade(String cidade);
-
+	
+	List<String> buscarCidades();
+	
 	void salvar(Hotel hotel);
 
 	void excluir(long id);

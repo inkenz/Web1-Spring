@@ -11,8 +11,14 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import br.ufscar.dc.dsw.validation.DataInicioAntesDoFim;
+import br.ufscar.dc.dsw.validation.DataPromocao;
+import br.ufscar.dc.dsw.validation.UniquePromocao;
+
 @Entity
 @Table(name="Promocao")
+@UniquePromocao(message = "{Unique.promocao.message}")
+@DataInicioAntesDoFim(message = "{Inicio.Fim.message}")
 public class Promocao  extends AbstractEntity<Long>{
 	@Size(min = 3)
 	@NotEmpty
@@ -21,7 +27,7 @@ public class Promocao  extends AbstractEntity<Long>{
 	
 	@Size(min = 18)
 	@NotEmpty
-	@Column(nullable = false, unique = false, length = 14)
+	@Column(nullable = false, unique = false, length = 18)
 	private String CNPJ;
 	
 	@Min(1)
@@ -30,13 +36,13 @@ public class Promocao  extends AbstractEntity<Long>{
 	private float preco;
 	
 	@NotNull
-	@FutureOrPresent
-	@Column(nullable = false, unique = false)
+	@DataPromocao(message = "{Data.Promocao.message}")
+	@Column(name = "inicio", nullable = false, unique = false)
 	private Date inicio;
 	
 	@NotNull
-	@FutureOrPresent
-	@Column(nullable = false, unique = false)
+	@DataPromocao(message = "{Data.Promocao.message}")
+	@Column(name = "fim",nullable = false, unique = false)
 	private Date fim;
 	
 	@ManyToOne
@@ -104,19 +110,15 @@ public class Promocao  extends AbstractEntity<Long>{
 		return inicio;
 	}
 	
-	@SuppressWarnings("deprecation")
-	public void setInicio(int ano, int mes, int dia) {
-		Date aux = new Date(ano, mes, dia);
-		this.inicio = aux;
+	public void setInicio(Date date) {
+		this.inicio = date;
 	}
 	
 	public Date getFim() {
 		return fim;
 	}
 	
-	@SuppressWarnings("deprecation")
-	public void setFim(int ano, int mes, int dia) {
-		Date aux = new Date(ano, mes, dia);
-		this.fim = aux;
+	public void setFim(Date date) {
+		this.fim = date;
 	}
 } 
