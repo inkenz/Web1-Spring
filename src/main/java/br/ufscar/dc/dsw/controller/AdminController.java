@@ -17,6 +17,7 @@ import br.ufscar.dc.dsw.domain.Hotel;
 import br.ufscar.dc.dsw.domain.Site;
 import br.ufscar.dc.dsw.service.spec.IHotelService;
 import br.ufscar.dc.dsw.service.spec.ISiteService;
+import br.ufscar.dc.dsw.service.spec.IUsuarioService;
 
 @Controller
 @RequestMapping("/admin")
@@ -27,6 +28,9 @@ public class AdminController {
 	
 	@Autowired
 	private ISiteService sservice;
+	
+	@Autowired
+	private IUsuarioService uservice;
 	
 	@Autowired
 	private BCryptPasswordEncoder encoder;
@@ -79,8 +83,17 @@ public class AdminController {
 		}
 		
 		
-		if(hservice.buscarPorEmail(hotel.getEmail()).getId() != hotel.getId())
-			return "admin/cadastroSite";
+		if(uservice.buscarPorEmail(hotel.getEmail()) != null) {
+			if(uservice.buscarPorEmail(hotel.getEmail()).getRole().equals("ROLE_HOTEL")) {
+				if(hservice.buscarPorEmail(hotel.getEmail()).getId() != hotel.getId())
+					return "admin/cadastroSite";
+			
+			}
+			else {
+				return "admin/cadastroSite";
+			}
+		}
+		
 		
 		hotel.setSenha(encoder.encode(hotel.getSenha()));
 		hservice.salvar(hotel);
@@ -138,8 +151,15 @@ public class AdminController {
 		}
 		
 		
-		if(sservice.buscarPorEmail(site.getEmail()).getId() != site.getId())
-			return "admin/cadastroSite";
+		if(uservice.buscarPorEmail(site.getEmail()) != null) {
+			if(uservice.buscarPorEmail(site.getEmail()).getRole().equals("ROLE_SITE")) {
+				if(sservice.buscarPorEmail(site.getEmail()).getId() != site.getId())
+					return "admin/cadastroSite";
+			}
+			else {
+				return "admin/cadastroSite";
+			}
+		}
 		
 		
 		site.setSenha(encoder.encode(site.getSenha()));
@@ -150,18 +170,8 @@ public class AdminController {
 	
 	@GetMapping("/excluirSite/{id}")
 	public String excluirS(@PathVariable("id") String id, ModelMap model) {
-		System.out.print("\n\n");
-		System.out.print("\n\n");
-		System.out.print("\n\n\n\n\n\n\n");
-		System.out.print("\n\n");
-		System.out.print(id);
-		System.out.print("\n\n");
-		
 		Site site = sservice.buscarPorId(Long.parseLong(id));
-		if(site != null) {
-			System.out.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-			
-		}
+		
 		sservice.excluir(Long.parseLong(id));
 		model.addAttribute("sucess", "site.delete.sucess");
 		
