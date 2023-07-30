@@ -7,7 +7,7 @@
 </head>
 
 <body>
-	<h1 th:text="site.cadastro.page"></h1>
+	<h1 th:text="#{site.cadastro.page}"></h1>
 	<form th:action="${site.id == null} ? @{/admin/salvarSite} : @{/admin/editarSite}" th:object="${site}"
 		method="POST">
 		<label th:text="#{email}" for="email"></label>
