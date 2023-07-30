@@ -70,16 +70,18 @@ public class AdminController {
 	@PostMapping("/editarHotel")
 	public String editarH(@Valid Hotel hotel, BindingResult result, RedirectAttributes attr) {
 		
-		// Apenas rejeita se o problema não for com o CNPJ (CNPJ campo read-only) 
-		
-		System.out.print("\n\n");
-		System.out.print(result.getFieldError("CNPJ"));
-		
-		
-		if (result.getFieldErrorCount() > 1 || result.getFieldError("CNPJ") == null ||  result.getFieldError("email") == null) {
-			System.out.print("\n\n\n\n\n\nERRO NA EDIÇÃO\n\n\n\n\n\n");
-			return "admin/cadastroHotel";
+		if (result.getFieldError("nome") != null || 
+				result.getFieldError("cidade") != null ||
+				result.getFieldError("senha") != null ||
+				hotel.getEmail().isEmpty()
+				) {
+			return "admin/cadastroSite";
 		}
+		
+		
+		if(hservice.buscarPorEmail(hotel.getEmail()).getId() != hotel.getId())
+			return "admin/cadastroSite";
+		
 		hotel.setSenha(encoder.encode(hotel.getSenha()));
 		hservice.salvar(hotel);
 		//attr.addFlashAttribute("sucess", "editora.edit.sucess");
@@ -127,31 +129,19 @@ public class AdminController {
 	
 	@PostMapping("/editarSite")
 	public String editarS(@Valid Site site, BindingResult result, RedirectAttributes attr) {
-		// Apenas rejeita se o problema não for com a URL (URL campo read-only) 
-		System.out.print("\n\n\n Email: "+site.getEmail()+
-				"\n Nome: "+site.getNome()+
-				"\n Telefone "+site.getTelefone()+
-				"\n URL: "+site.getURL()+"\n\n\n");
-		System.out.print(result.getFieldErrorCount());
-		System.out.print("\n\n");
-		System.out.print(result.getFieldError("nome"));
-		System.out.print("\n\n");
-		System.out.print(result.getFieldError("telefone"));
-		System.out.print("\n\n");
-		System.out.print(result.getFieldError("URL"));
-		System.out.print("\n\n");
-		System.out.print(result.getFieldError("senha"));
-		System.out.print("\n\n");
-		System.out.print(result.getFieldError("email"));
-		
 		if (result.getFieldError("nome") != null || 
 				result.getFieldError("telefone") != null ||
 				result.getFieldError("senha") != null ||
 				site.getEmail().isEmpty()
 				) {
-			System.out.print("\n\n\n\n\n\nERRO NA EDIÇÃO\n\n\n\n\n\n");
 			return "admin/cadastroSite";
 		}
+		
+		
+		if(sservice.buscarPorEmail(site.getEmail()).getId() != site.getId())
+			return "admin/cadastroSite";
+		
+		
 		site.setSenha(encoder.encode(site.getSenha()));
 		sservice.salvar(site);
 		attr.addFlashAttribute("sucess", "site.edit.sucess");
