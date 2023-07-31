@@ -18,7 +18,7 @@ public class DataPromocaoValidator implements ConstraintValidator<DataPromocao, 
 
 	@Override
 	public boolean isValid(Date data, ConstraintValidatorContext context) {
-		if (dao != null) {
+		if (dao != null && data != null) {
 			java.sql.Date hoje = new java.sql.Date(new java.util.Date().getTime());
 			
 			return data.after(hoje) || data.equals(hoje);

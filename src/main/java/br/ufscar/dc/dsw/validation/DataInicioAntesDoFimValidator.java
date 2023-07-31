@@ -13,7 +13,11 @@ public class DataInicioAntesDoFimValidator implements ConstraintValidator<DataIn
     	if (promocao == null) {
             return true; 
         }        
-
+    	
+    	if(promocao.getInicio() == null || promocao.getFim() == null) {
+    		return true;
+    	}
+    	
         return promocao.getInicio().before(promocao.getFim()); 
     }
 }

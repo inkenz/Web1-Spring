@@ -70,8 +70,9 @@ public class HotelController {
 	@PostMapping("/salvarPromocao")
 	public String salvarSite(@Valid Promocao promocao, BindingResult result, RedirectAttributes attr, ModelMap model) {
 		System.out.print("\n\n\n\n\n\n\n\n\n\n\n\n");
-		System.out.print(promocao.getCNPJ());
 		System.out.print("\n\n\n\n\n\n\n\n\n\n\n\n");
+		System.out.print(promocao.getFim());
+		
 		System.out.print("\n\n\n\n\n\n\n\n\n\n\n\n");
 		System.out.print(result.getErrorCount());
 		System.out.print("\n\n\n\n\n\n\n\n\n\n\n\n");

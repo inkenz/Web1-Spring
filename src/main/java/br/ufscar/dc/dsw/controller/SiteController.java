@@ -44,7 +44,7 @@ public class SiteController {
 	
 	@GetMapping(value={"/index","/"})
 	public String index1() {
-		return "hotel/index";
+		return "site/index";
 	}
 	
 	@GetMapping("/listarPromocoes")
@@ -52,7 +52,7 @@ public class SiteController {
 		List<Promocao> l1 = pservice.buscarTodosPorSite(getURLAtual());
 		
 		model.addAttribute("promocoes",l1);
-		return "hotel/listaPromocoes";
+		return "site/listaPromocoes";
 	}
 	
 	private String getURLAtual() {

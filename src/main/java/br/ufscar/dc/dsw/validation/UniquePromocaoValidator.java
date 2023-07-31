@@ -20,9 +20,13 @@ public class UniquePromocaoValidator implements ConstraintValidator<UniquePromoc
     	if (promocao == null || dao == null) {
             return true; 
         }
-
+    	
+    	
+    	if(promocao.getInicio() == null || promocao.getFim() == null) {
+    		return true;
+    	}
+    	
         List<Promocao> promocoes = dao.findAll();
-        if(promocoes == null) return true;
         
         
         for (Promocao p : promocoes) {
@@ -30,6 +34,10 @@ public class UniquePromocaoValidator implements ConstraintValidator<UniquePromoc
             	if(p.getInicio().before(promocao.getInicio()) && p.getFim().after(promocao.getInicio()))
             		return false;
             	if(p.getInicio().before(promocao.getFim()) && p.getFim().after(promocao.getFim()))
+            		return false;
+            	if(p.getInicio().after(promocao.getInicio()) && p.getFim().before(promocao.getFim()))
+            		return false;
+            	if(p.getInicio().before(promocao.getInicio()) && p.getFim().after(promocao.getFim()))
             		return false;
             }
         }

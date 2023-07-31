@@ -79,32 +79,31 @@ public class AdminController {
 				result.getFieldError("senha") != null ||
 				hotel.getEmail().isEmpty()
 				) {
-			return "admin/cadastroSite";
+			return "admin/cadastroHotel";
 		}
 		
 		
 		if(uservice.buscarPorEmail(hotel.getEmail()) != null) {
 			if(uservice.buscarPorEmail(hotel.getEmail()).getRole().equals("ROLE_HOTEL")) {
 				if(hservice.buscarPorEmail(hotel.getEmail()).getId() != hotel.getId())
-					return "admin/cadastroSite";
+					return "admin/cadastroHotel";
 			
 			}
 			else {
-				return "admin/cadastroSite";
+				return "admin/cadastroHotel";
 			}
 		}
 		
 		
 		hotel.setSenha(encoder.encode(hotel.getSenha()));
 		hservice.salvar(hotel);
-		//attr.addFlashAttribute("sucess", "editora.edit.sucess");
+		
 		return "redirect:/hotel/listar";
 	}
 	
 	@GetMapping("/excluirHotel/{id}")
 	public String excluirH(@PathVariable("id") String id, ModelMap model) {
 		hservice.excluir(Long.parseLong(id));
-		model.addAttribute("sucess", "editora.delete.sucess");
 		
 		return "redirect:/hotel/listar";
 	}
@@ -150,7 +149,7 @@ public class AdminController {
 			return "admin/cadastroSite";
 		}
 		
-		
+	
 		if(uservice.buscarPorEmail(site.getEmail()) != null) {
 			if(uservice.buscarPorEmail(site.getEmail()).getRole().equals("ROLE_SITE")) {
 				if(sservice.buscarPorEmail(site.getEmail()).getId() != site.getId())
@@ -164,16 +163,13 @@ public class AdminController {
 		
 		site.setSenha(encoder.encode(site.getSenha()));
 		sservice.salvar(site);
-		attr.addFlashAttribute("sucess", "site.edit.sucess");
 		return "redirect:/site/listar";
 	}
 	
 	@GetMapping("/excluirSite/{id}")
 	public String excluirS(@PathVariable("id") String id, ModelMap model) {
-		Site site = sservice.buscarPorId(Long.parseLong(id));
 		
 		sservice.excluir(Long.parseLong(id));
-		model.addAttribute("sucess", "site.delete.sucess");
 		
 		return "redirect:/site/listar";
 	}
